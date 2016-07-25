@@ -1,0 +1,8 @@
+---
+gitenv_user: "{{ user }}"
+gitenv_group: "{{ group | default(gitenv_user) }}"
+gitenv_user_home: "{{ host_user_homes }}/{{ gitenv_user }}"
+gitenv_install_path: "{{ host_user_homes }}/install"
+gitenv_repo: "{{ user_home }}/env"
+gitenv_config: "{{ user_home }}/.gitenv.rb"
+gitenv_chdir: "{{ user_home }}"
