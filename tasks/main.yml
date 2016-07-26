@@ -1,15 +1,8 @@
 ---
-- name: gem install gitenv
+
+- name: Install gitenv
   gem: name=gitenv user_install=no state=latest
-- name: mkdir {{ gitenv_install_path }}
-  file: path={{ gitenv_install_path }} owner={{ gitenv_user }} group={{ gitenv_group }} state=directory
-- name: back up original configuration # TODO: implement this in gitenv and remove this step
-  shell: mv {{ item.path | default(item.name) }} {{ gitenv_install_path }}/{{ item.name }}.orig &>/dev/null || touch {{ gitenv_install_path }}/{{ item.name }}.orig creates={{ gitenv_install_path }}/{{ item.name }}.orig
-  with_items: gitenv_backups
-  when: gitenv_backups is defined
-- name: make .httpie directory # TODO: implement this in gitenv and remove this step
-  file: path={{ gitenv_user_home }}/.httpie owner={{ gitenv_user }} group={{ gitenv_group }} state=directory
-- name: gitenv apply
+- name: Apply gitenv
   shell: gitenv apply chdir={{ gitenv_chdir }}
   become: yes
   become_user: "{{ gitenv_user }}"
