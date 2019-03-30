@@ -2,6 +2,7 @@
 
 - name: Install gitenv
   gem: name=gitenv user_install=no state=latest
+
 - name: Apply gitenv
   shell: gitenv apply chdir={{ gitenv_chdir }}
   become: yes
