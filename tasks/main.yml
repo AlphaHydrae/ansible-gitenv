@@ -1,15 +1,26 @@
 ---
 
 - name: Install gitenv
-  gem: name=gitenv user_install=no state=latest
-
-- name: Apply gitenv
-  shell: gitenv apply chdir={{ gitenv_chdir }}
-  become: yes
+  command:
+    # Note: using Ansible's gem module does not work for some reason.
+    cmd: gem install gitenv
+    creates: "{{ asdf_shims_dir }}/gitenv"
+  become: true
   become_user: "{{ gitenv_user }}"
   environment:
+    ASDF_RUBY_VERSION: "{{ ruby_version }}"
+    PATH: "{{ asdf_shims_dir }}:/usr/local/opt/asdf/bin:/usr/local/bin:{{ ansible_env.PATH }}"
+
+- name: Apply gitenv
+  command:
+    cmd: gitenv apply
+    chdir: "{{ gitenv_chdir }}"
+  become: true
+  become_user: "{{ gitenv_user }}"
+  environment:
+    ASDF_RUBY_VERSION: "{{ ruby_version }}"
     GITENV_REPO: "{{ gitenv_repo }}"
     GITENV_CONFIG: "{{ gitenv_config }}"
-    PATH: "{{ host_package_manager_paths }}{{ ansible_env.PATH }}"
+    PATH: "{{ asdf_shims_dir }}:/usr/local/bin:{{ ansible_env.PATH }}"
   register: result
-  changed_when: result.rc != 0
+  changed_when: false
