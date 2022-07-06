@@ -17,10 +17,6 @@
     chdir: "{{ gitenv_chdir }}"
   become: true
   become_user: "{{ gitenv_user }}"
-  environment:
-    ASDF_RUBY_VERSION: "{{ ruby_version }}"
-    GITENV_REPO: "{{ gitenv_repo }}"
-    GITENV_CONFIG: "{{ gitenv_config }}"
-    PATH: "{{ asdf_shims_dir }}:/usr/local/bin:{{ ansible_env.PATH }}"
+  environment: "{{ gitenv_environment }}"
   register: result
   changed_when: false
