@@ -9,7 +9,7 @@
   become_user: "{{ gitenv_user }}"
   environment:
     ASDF_RUBY_VERSION: "{{ ruby_version }}"
-    PATH: "{{ asdf_shims_dir }}:/usr/local/opt/asdf/bin:/usr/local/bin:{{ ansible_env.PATH }}"
+    PATH: "{{ asdf_shims_dir }}:{{ asdf_homebrew_dir }}/opt/asdf/bin:{{ asdf_homebrew_dir }}/bin:/usr/local/bin:{{ ansible_env.PATH }}"
 
 - name: Apply gitenv
   command:
