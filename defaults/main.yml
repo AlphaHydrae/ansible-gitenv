@@ -9,5 +9,5 @@ gitenv_environment_base:
   ASDF_RUBY_VERSION: "{{ ruby_version }}"
   GITENV_REPO: "{{ gitenv_repo }}"
   GITENV_CONFIG: "{{ gitenv_config }}"
-  PATH: "{{ asdf_shims_dir }}:/usr/local/bin:{{ ansible_env.PATH }}"
+  PATH: "{{ asdf_shims_dir }}:{{ asdf_homebrew_dir }}/bin:{{ ansible_env.PATH }}"
 gitenv_environment_extra: {}
